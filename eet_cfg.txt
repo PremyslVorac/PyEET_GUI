@@ -4,7 +4,7 @@ Pro nastaveni testovaciho režimu volte test_fl=True
 DPH nastavujte v procentech, tj napø 21%=21
 Nastaveni pro payment. Nastavte unikátní id platby podle vašeho øazení. Velikost tržby (amount) se udává BEZ DPH.
 ##url
-pg=https://prod.eet.cz:443/eet/services/EETServiceSOAP/v3;prod=https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3
+prod=https://prod.eet.cz:443/eet/services/EETServiceSOAP/v3;pg=https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3
 ##playground
 cert=EET_CA1_Playground-CZ00000019.p12;pass=eet
 ##production

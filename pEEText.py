@@ -52,8 +52,10 @@ def string_to_dict(cstring, key):
                 out[par[0]] = par[1]
             else:
                 out = i
+#        logger.info('Connection string for {0} acquired'.format(key))
     except:
         raise
+#        logger.error('Cannot acquire {0} connection data'.format(key))
     return out
 
 def load_config_file(cfile, cfgdata):
@@ -61,7 +63,10 @@ def load_config_file(cfile, cfgdata):
     try:
         with open(cfile, mode='r', encoding='windows-1250') as f:
             output = f.read().splitlines()
+#        logger.info('Opening file %s' % cfile)
     except:
+#        logger.exception('Cannot find configuration file %s.' % cfile)
+#        closeLoggers(logger, handler, handlerErr)
         raise
     for i in range(len(output)):
         key = output[i].rstrip().lstrip().lstrip('##')
@@ -79,6 +84,7 @@ if __name__ == '__main__':
     import lxml
     from lxml import etree
     import uuid
+#    import utils
     import requests
     import pytz
     import sys, os
@@ -107,14 +113,14 @@ if __name__ == '__main__':
     pg_url = cfgdata['url']['pg']
     
     if cfgdata['eet_par']['env'] == 'pg':
-        CERT_PATH = (cfgdata['directories']['cert_dir'] + '/' +
-                     cfgdata['playground']['cert'])
+        CERT_PATH = cfgdata['directories']['cert_dir'] + '/' + cfgdata['playground']['cert']
         CERT_PASS = cfgdata['playground']['pass']
+        turl = pg_url
         logger.info('Prostredi: playground. Url: %s' % pg_url)
     elif cfgdata['eet_par']['env'] == 'prod':
-        CERT_PATH = (cfgdata['directories']['cert_dir'] + '/' +
-                     cfgdata['production']['cert'])
+        CERT_PATH = cfgdata['directories']['cert_dir'] + '/' + cfgdata['production']['cert']
         CERT_PASS = cfgdata['production']['pass']
+        turl = prod_url
         logger.info('Prostredi: produkce. Url: %s' % prod_url)
     pokladna = cfgdata['eet_par']['pokladna']
     provozovna = int(cfgdata['eet_par']['provozovna'])
@@ -136,10 +142,11 @@ if __name__ == '__main__':
     logger.info('Celkova cena s DPH: %s' % total_amount)
     print('Celkova cena s DPH: %s' % total_amount)
     eet_client = eet.EET(CERT_PATH, CERT_PASS, outdir, provozovna,
-                         pokladna=pokladna, eet_url=prod_url)
+                         pokladna=pokladna, eet_url=turl)
     payment = eet_client.create_payment(payment_ID, total_amount, test=test_fl)
     payment.set_amount(eet.TAX_BASIC, amount, a_dph)
     result = eet_client.send_payment(payment)
     print (result['fik'])
     logger.info('Kod fik: %s' %result['fik'])
+#    logger.info(result)
     closeLoggers(logger, handler, handlerErr)
