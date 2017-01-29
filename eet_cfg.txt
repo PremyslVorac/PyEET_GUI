@@ -1,0 +1,17 @@
+Konfiguraèní soubor k EET. Konfigurace probíhá v sekci eet_par a payment
+Pro nastaveni prostredi volte env=pg (playground), env=prod (produkce)
+Pro nastaveni testovaciho režimu volte test_fl=True
+DPH nastavujte v procentech, tj napø 21%=21
+Nastaveni pro payment. Nastavte unikátní id platby podle vašeho øazení. Velikost tržby (amount) se udává BEZ DPH.
+##url
+pg=https://prod.eet.cz:443/eet/services/EETServiceSOAP/v3;prod=https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3
+##playground
+cert=EET_CA1_Playground-CZ00000019.p12;pass=eet
+##production
+cert=xxxxx.p12;pass=xxxxx
+##directories
+cert_dir=cert;eet_dir=eet;out_dir=out
+##eet_par
+dph_rate=21;provozovna=1;pokladna=pokladna1;test_fl=False;env=pg
+##payment
+id=P10002;amount=150
