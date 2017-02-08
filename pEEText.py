@@ -105,23 +105,19 @@ if __name__ == '__main__':
                      cdir + '\\' + cfgdata['directories']['cert_dir']]
     [sys.path.append(p) for p in eetpaths
      if os.path.exists(p) and p not in sys.path]
-#    sys.path.append('D:\Apps\EET\eet')
+    sys.path.append('D:\Apps\EET\eet')
     import eet
-
-
-    prod_url = cfgdata['url']['prod']
-    pg_url = cfgdata['url']['pg']
     
     if cfgdata['eet_par']['env'] == 'pg':
         CERT_PATH = cfgdata['directories']['cert_dir'] + '/' + cfgdata['playground']['cert']
         CERT_PASS = cfgdata['playground']['pass']
-        turl = pg_url
-        logger.info('Prostredi: playground. Url: %s' % pg_url)
+        turl = cfgdata['url']['pg']
+        logger.info('Prostredi: playground. Url: %s' % turl)
     elif cfgdata['eet_par']['env'] == 'prod':
         CERT_PATH = cfgdata['directories']['cert_dir'] + '/' + cfgdata['production']['cert']
         CERT_PASS = cfgdata['production']['pass']
-        turl = prod_url
-        logger.info('Prostredi: produkce. Url: %s' % prod_url)
+        turl = cfgdata['url']['prod']
+        logger.info('Prostredi: produkce. Url: %s' % turl)
     pokladna = cfgdata['eet_par']['pokladna']
     provozovna = int(cfgdata['eet_par']['provozovna'])
     payment_ID = cfgdata['payment']['id']
